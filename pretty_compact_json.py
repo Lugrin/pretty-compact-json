@@ -5,6 +5,10 @@ import json
 from collections import OrderedDict
 
 
+def raw_string(s):
+    return repr(s)[1:-1]
+
+
 def format_json(obj, indentation=2):
     indent = ' ' * indentation
     if isinstance(obj, list):
@@ -18,10 +22,10 @@ def format_json(obj, indentation=2):
         print('{')
         items = list(obj.items())
         for key, val in items[:-1]:
-            print('{}"{}": {},'.format(indent, key, json.dumps(val)))
+            print('{}"{}": {},'.format(indent, raw_string(key), json.dumps(val)))
         if len(items) > 0:
             key, val = items[-1]
-            print('{}"{}": {}'.format(indent, key, json.dumps(val)))
+            print('{}"{}": {}'.format(indent, raw_string(key), json.dumps(val)))
         print('}')
     else:
         print(json.dumps(obj))
